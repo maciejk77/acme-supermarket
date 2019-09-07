@@ -4,7 +4,7 @@ import Basket from '../Basket';
 
 const App = () => (
   <div>
-    <PricingPanel />
+    {/* <PricingPanel /> */}
     <Basket />
   </div>
 );
