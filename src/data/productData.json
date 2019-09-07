@@ -1,0 +1,16 @@
+{
+  "products": {
+    "FR1": {
+      "price": "311",
+      "description": "Fruit tea"
+    },
+    "SR1": {
+      "price": "500",
+      "description": "Strawberries"
+    },
+    "CF1": {
+      "price": "1123",
+      "description": "Coffee"
+    }
+  }
+}

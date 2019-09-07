@@ -1,0 +1,15 @@
+{
+  "pricingRules": {
+    "FR1": {
+      "buyXgetYFree": {
+        "MinNumOfItemsNeeded": "2"
+      }
+    },
+    "SR1": {
+      "discount": {
+        "percentage": "10",
+        "MinNumOfItemsNeeded": "3"
+      }
+    }
+  }
+}
