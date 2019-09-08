@@ -56,9 +56,9 @@ Test Data:
 - refactor and split to atomic design
 - general refactor, some repetition with utils
 - add removal button to ShoppingList (to remove items if needed)
-- apply proper styling Sass or styled components, remove or inline
+- apply proper styling Sass or styled components, remove inline
 - write Jest test
-- write Cypress Tests
+- write Cypress tests
 - build Node/Express endpoint and PricingPanel
 
 ## Screenshot
