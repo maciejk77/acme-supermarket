@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { products } from '../../data/productData.json';
+import { BasketContext } from '../BasketContext/index.js';
 
 const ProductGrid = () => {
-  const [basket, addToBasket] = useState([]);
-  const handleClick = e => {
-    addToBasket([...basket, e.target.value]);
-  };
+  const { handleAddToBasketClick } = useContext(BasketContext);
 
-  //console.log(basket); // TO BE DELETED
   return products.map(({ productCode, description, price }) => {
     return (
       <button
         style={styles.buttonStyle}
         key={productCode}
         value={productCode}
-        onClick={handleClick}
+        onClick={handleAddToBasketClick}
       >
         {description} £{(price / 100).toFixed(2)}
       </button>
