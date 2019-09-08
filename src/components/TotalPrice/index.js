@@ -4,10 +4,10 @@ import { BasketContext } from '../BasketContext';
 const TotalPrice = () => {
   const { totalPrice } = useContext(BasketContext);
 
-  const formatter = number => (number / 100).toFixed(2);
+  const formatter = number => parseInt((number / 100).toFixed(2));
   const total = formatter(totalPrice);
   const discount = formatter(0);
-  const totalAfterDiscount = formatter(total - discount);
+  const totalAfterDiscount = total - discount;
 
   return (
     <div style={styles.totalPrice}>
