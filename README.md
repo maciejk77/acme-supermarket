@@ -43,7 +43,7 @@ Test Data:
 - `cd acme-supermarket` change to folder
 - `npm i` to install all dependecies
 - `npm run start` to start app
-- visit ``http://localhost:3003/` to see app
+- visit `http://localhost:3003/` to see app
 
 ## Technology and tasks completed
 
