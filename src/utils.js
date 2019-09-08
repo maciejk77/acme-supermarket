@@ -14,3 +14,16 @@ export const getMapOfBasketItems = basket => {
   // return the newly mapped object i.e. {CF1: 7, SR1: 1, FR1: 2}
   return basketItemsMap;
 };
+
+// =================================================================
+
+export const completeProductInfo = (products, itemCode) => {
+  return products.filter(prod => prod.productCode === itemCode);
+};
+
+// =================================================================
+
+// export const getDiscountData = (mappedBasket, pricingRules) => {
+//   console.log('mBasket => ', mappedBasket);
+//   console.log('pRules => ', pricingRules);
+// };

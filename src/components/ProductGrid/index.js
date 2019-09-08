@@ -13,7 +13,7 @@ const ProductGrid = () => {
         value={productCode}
         onClick={handleAddToBasketClick}
       >
-        {description} £{(price / 100).toFixed(2)}
+        {description}
       </button>
     );
   });
@@ -22,6 +22,7 @@ const ProductGrid = () => {
 // quick fix, temp styles to be replaced with Sass or styled components
 const styles = {
   buttonStyle: {
+    width: '10rem',
     border: 'none',
     padding: '1rem',
     fontSize: '1rem',
@@ -33,6 +34,8 @@ const styles = {
 };
 
 export default ProductGrid;
+
+// ====== TO BE DELETED =========================================
 
 // import React, { useReducer, useState } from 'react';
 // import data from '../../data/productData.json';
