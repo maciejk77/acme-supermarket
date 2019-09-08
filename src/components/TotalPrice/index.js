@@ -27,7 +27,7 @@ const styles = {
     flexDirection: 'column',
     backgroundColor: 'blue',
     lineHeight: '1.5rem',
-    padding: '1rem 2rem',
+    padding: '1rem 1rem',
     fontSize: '1rem',
     color: 'white',
     margin: '.5rem',
