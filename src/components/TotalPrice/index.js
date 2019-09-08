@@ -12,7 +12,7 @@ const TotalPrice = () => {
   return (
     <div style={styles.totalPrice}>
       <div>Total: £{total}</div>
-      <div>Discount: - £{discount}</div>
+      <div>Discount: -£{discount}</div>
       <div style={styles.totalAfterDiscount}>
         Total (after discount): £{totalAfterDiscount}
       </div>
@@ -22,16 +22,19 @@ const TotalPrice = () => {
 
 const styles = {
   totalPrice: {
-    border: '1px solid blue',
+    display: 'flex',
+    alignItems: 'flex-end',
+    flexDirection: 'column',
+    backgroundColor: 'blue',
     lineHeight: '1.5rem',
     padding: '1rem 2rem',
     fontSize: '1rem',
-    color: 'blue',
+    color: 'white',
     margin: '.5rem',
     outline: 'none'
   },
   totalAfterDiscount: {
-    borderTop: '.15rem solid blue',
+    borderTop: '.15rem solid white',
     paddingTop: '.5rem'
   }
 };

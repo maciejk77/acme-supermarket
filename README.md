@@ -39,8 +39,28 @@ Test Data:
 
 # Installation
 
+- `git clone acme-supermarket` the project
+- `cd acme-supermarket` change to folder
+- `npm i` to install all dependecies
+- `npm run start` to start app
+- visit ``http://localhost:3003/` to see app
+
 ## Technology and tasks completed
+
+- setting generic UI, components based
+- used hooks e.g. useState, useContext
+- Parcel bundling
 
 ## To be done
 
+- refactor and split to atomic design
+- general refactor, some repetition with utils
+- add removal button to ShoppingList (to remove items if needed)
+- apply proper styling Sass or styled components, remove or inline
+- write Jest test
+- write Cypress Tests
+- build Node/Express endpoint and PricingPanel
+
 ## Screenshot
+
+![Screenshot](src/assets/screenshot.png)

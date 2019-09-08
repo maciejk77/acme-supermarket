@@ -3,7 +3,7 @@ import PricingPanel from '../PricingPanel';
 import Basket from '../Basket';
 
 const App = () => (
-  <div>
+  <div style={{ fontFamily: 'Verdana' }}>
     {/* <PricingPanel /> */}
     <Basket />
   </div>

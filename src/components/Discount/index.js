@@ -22,9 +22,9 @@ const Discount = () => {
   return basket.map((item, idx) => {
     return (
       <div key={idx}>
-        {item}
-        <pre>{JSON.stringify(getPricingRulesForProductCode(item))}</pre>
-        <pre>{JSON.stringify(mappedBasket)}</pre>
+        {/* {item} */}
+        {/* <pre>{JSON.stringify(getPricingRulesForProductCode(item))}</pre>
+        <pre>{JSON.stringify(mappedBasket)}</pre> */}
       </div>
     );
   });
