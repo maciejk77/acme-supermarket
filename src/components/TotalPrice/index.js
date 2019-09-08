@@ -7,7 +7,7 @@ const TotalPrice = () => {
   const formatter = number => (number / 100).toFixed(2);
   const total = formatter(totalPrice);
   const discount = formatter(0);
-  const totalAfterDiscount = total - discount;
+  const totalAfterDiscount = (total - discount).toFixed(2);
 
   return (
     <div style={styles.totalPrice}>
