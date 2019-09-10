@@ -1,21 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { BasketContext } from '../BasketContext';
+import { formatToDecimal } from '../../utils';
 
 const TotalPrice = () => {
-  const { totalPrice } = useContext(BasketContext);
+  const { total } = useContext(BasketContext);
+  const reduceTotal = total.reduce((sum, price) => {
+    return parseInt(sum) + parseInt(price);
+  }, 0);
 
-  const formatter = number => (number / 100).toFixed(2);
-  const total = formatter(totalPrice);
-  const discount = formatter(0);
-  const totalAfterDiscount = (total - discount).toFixed(2);
+  const totalValue = formatToDecimal(reduceTotal, 2);
+  const discount = formatToDecimal(0, 2);
+  const totalAfterDiscount = (totalValue - discount).toFixed(2);
 
   return (
     <div style={styles.totalPrice}>
-      <div>Total: £{total}</div>
-      <div>Discount: -£{discount}</div>
-      <div style={styles.totalAfterDiscount}>
-        Total (after discount): £{totalAfterDiscount}
-      </div>
+      {reduceTotal ? (
+        <Fragment>
+          <div>Total: £{totalValue}</div>
+          <div>Discount: -£{discount}</div>
+          <div style={styles.totalAfterDiscount}>
+            Total (after discount): £{totalAfterDiscount}
+          </div>
+        </Fragment>
+      ) : null}
     </div>
   );
 };
@@ -25,17 +32,18 @@ const styles = {
     display: 'flex',
     alignItems: 'flex-end',
     flexDirection: 'column',
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     lineHeight: '1.5rem',
-    padding: '1rem 1rem',
+    padding: '.5rem',
     fontSize: '1rem',
-    color: 'white',
+    color: 'black',
     margin: '.5rem',
     outline: 'none'
   },
   totalAfterDiscount: {
-    borderTop: '.15rem solid white',
-    paddingTop: '.5rem'
+    fontSize: '1.1rem',
+    paddingTop: '.5rem',
+    borderTop: '.1rem solid black'
   }
 };
 

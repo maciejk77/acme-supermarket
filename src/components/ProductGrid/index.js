@@ -3,15 +3,19 @@ import { products } from '../../data/productData.json';
 import { BasketContext } from '../BasketContext/index.js';
 
 const ProductGrid = () => {
-  const { handleAddToBasketClick } = useContext(BasketContext);
+  const { dispatch } = useContext(BasketContext);
 
-  return products.map(({ productCode, description, price }) => {
+  const handleClick = e => {
+    dispatch({ type: 'ADD_ITEM_TO_BASKET', payload: e.target.value });
+  };
+
+  return products.map(({ productCode, description }) => {
     return (
       <button
-        style={styles.buttonStyle}
         key={productCode}
         value={productCode}
-        onClick={handleAddToBasketClick}
+        onClick={handleClick}
+        style={styles.buttonStyle}
       >
         {description}
       </button>

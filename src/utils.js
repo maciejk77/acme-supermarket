@@ -1,6 +1,6 @@
+// === mapping a basket, how many items of given productCode are in the basket ===
 export const getMapOfBasketItems = basket => {
   const basketItemsMap = {};
-
   // loop over basket items
   for (let item of basket) {
     if (basketItemsMap[item]) {
@@ -15,15 +15,17 @@ export const getMapOfBasketItems = basket => {
   return basketItemsMap;
 };
 
-// =================================================================
-
+// === fetching data for given productCode ===
 export const completeProductInfo = (products, itemCode) => {
   return products.filter(prod => prod.productCode === itemCode);
 };
 
-// =================================================================
+// === fetching discount data ===
+export const getDiscountData = (mappedBasket, pricingRules) => {
+  console.log('mBasket => ', mappedBasket);
+  console.log('pRules => ', pricingRules);
+};
 
-// export const getDiscountData = (mappedBasket, pricingRules) => {
-//   console.log('mBasket => ', mappedBasket);
-//   console.log('pRules => ', pricingRules);
-// };
+// === getting number(s) formatted to decimal, and set number of places ===
+export const formatToDecimal = (number, places) =>
+  (number / 100).toFixed(places);

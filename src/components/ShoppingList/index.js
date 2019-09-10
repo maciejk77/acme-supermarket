@@ -10,19 +10,21 @@ import { completeProductInfo } from '../../utils';
 
 const ShoppingList = () => {
   const { basket } = useContext(BasketContext);
-  return basket.map((basketItemCode, idx) => (
-    <div style={styles.shoppingListStyle} key={idx}>
-      <div>1x ({basketItemCode})</div>
-      <div>
-        {completeProductInfo(products, basketItemCode).map(i => i.description)}
+
+  return basket.map((item, idx) => {
+    const price = completeProductInfo(products, item).map(i => i.price);
+    const description = completeProductInfo(products, item).map(
+      i => i.description
+    );
+
+    return (
+      <div style={styles.shoppingListStyle} key={idx}>
+        <div>1x ({item})</div>
+        <div>{description}</div>
+        <div>{`£${(price / 100).toFixed(2)}`}</div>
       </div>
-      <div>
-        {completeProductInfo(products, basketItemCode).map(
-          i => `£${(i.price / 100).toFixed(2)}`
-        )}
-      </div>
-    </div>
-  ));
+    );
+  });
 };
 
 // quick fix, temp styles to be replaced with Sass or styled components

@@ -1,39 +1,46 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import ProductGrid from '../ProductGrid';
 import ShoppingList from '../ShoppingList';
-import Discount from '../Discount';
+// import Discount from '../Discount';
 import TotalPrice from '../TotalPrice';
 import { BasketContext } from '../BasketContext';
-import { completeProductInfo } from '../../utils';
 import { products } from '../../data/productData.json';
+import { completeProductInfo } from '../../utils';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_ITEM_TO_BASKET':
+      return {
+        basket: [...state.basket, action.payload],
+        total: [
+          ...state.total,
+          completeProductInfo(products, action.payload).map(i => i.price)
+        ]
+      };
+    // case 'REMOVE_ITEM_FROM_BASKET':
+    //   // to be completed
+    default:
+      state;
+  }
+};
 
 const Basket = () => {
-  const [basket, addToBasket] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0); // move this hook and setter to TotalPrice, refactor needed
-
-  const handleAddToBasketClick = e => {
-    addToBasket([...basket, e.target.value]);
-    setTotalPrice(
-      totalPrice +
-        parseInt(
-          completeProductInfo(products, e.target.value).map(i => i.price)
-        )
-    );
-  };
-
+  const [{ basket, total }, dispatch] = useReducer(reducer, {
+    basket: [],
+    total: []
+  });
   return (
     <div>
       <BasketContext.Provider
         value={{
           basket,
-          addToBasket,
-          totalPrice,
-          handleAddToBasketClick
+          total,
+          dispatch
         }}
       >
         <ProductGrid />
         <ShoppingList />
-        <Discount />
+        {/* <Discount /> */}
         <TotalPrice />
       </BasketContext.Provider>
     </div>
