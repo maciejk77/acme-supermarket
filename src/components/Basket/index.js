@@ -4,37 +4,26 @@ import ShoppingList from '../ShoppingList';
 // import Discount from '../Discount';
 import TotalPrice from '../TotalPrice';
 import { BasketContext } from '../BasketContext';
-import { products } from '../../data/productData.json';
-import { completeProductInfo } from '../../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM_TO_BASKET':
       return {
-        basket: [...state.basket, action.payload],
-        total: [
-          ...state.total,
-          completeProductInfo(products, action.payload).map(i => i.price)
-        ]
+        basket: state.basket.concat(action.payload)
       };
-    // case 'REMOVE_ITEM_FROM_BASKET':
-    //   // to be completed
+    // case 'REMOVE_ITEM_FROM_BASKET': {}
     default:
       state;
   }
 };
 
 const Basket = () => {
-  const [{ basket, total }, dispatch] = useReducer(reducer, {
-    basket: [],
-    total: []
-  });
+  const [{ basket }, dispatch] = useReducer(reducer, { basket: [] });
   return (
     <div>
       <BasketContext.Provider
         value={{
           basket,
-          total,
           dispatch
         }}
       >

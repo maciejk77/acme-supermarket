@@ -3,9 +3,9 @@ import { BasketContext } from '../BasketContext';
 import { formatToDecimal } from '../../utils';
 
 const TotalPrice = () => {
-  const { total } = useContext(BasketContext);
-  const reduceTotal = total.reduce((sum, price) => {
-    return parseInt(sum) + parseInt(price);
+  const { basket } = useContext(BasketContext);
+  const reduceTotal = basket.reduce((sum, item) => {
+    return parseInt(sum) + parseInt(item.price);
   }, 0);
 
   const totalValue = formatToDecimal(reduceTotal, 2);

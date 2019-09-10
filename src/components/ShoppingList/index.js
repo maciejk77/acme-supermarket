@@ -1,27 +1,15 @@
 import React, { useContext } from 'react';
 import { BasketContext } from '../BasketContext';
-import { products } from '../../data/productData.json';
-import { completeProductInfo } from '../../utils';
-
-// quick fix, refactor to DataContext or supply array of objects, not only array of keys e.g. basket
-// to avoid another two .map() in price/description, no need to import {products} as well
-// quick fix completeProductInfo import from utils
-// refactor to basket obj to be {} of all product information not [] of just productCodes
 
 const ShoppingList = () => {
   const { basket } = useContext(BasketContext);
 
   return basket.map((item, idx) => {
-    const price = completeProductInfo(products, item).map(i => i.price);
-    const description = completeProductInfo(products, item).map(
-      i => i.description
-    );
-
     return (
       <div style={styles.shoppingListStyle} key={idx}>
-        <div>1x ({item})</div>
-        <div>{description}</div>
-        <div>{`£${(price / 100).toFixed(2)}`}</div>
+        <div>1x ({item.productCode})</div>
+        <div>{item.description}</div>
+        <div>{`£${(item.price / 100).toFixed(2)}`}</div>
       </div>
     );
   });
