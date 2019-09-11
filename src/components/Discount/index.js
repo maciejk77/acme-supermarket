@@ -1,42 +1,52 @@
 import React, { useContext } from 'react';
 import { BasketContext } from '../BasketContext';
 import { pricingRules } from '../../data/pricingRules.json';
-import { getMapOfBasketItems } from '../../utils';
-//import { getDiscountData } from '../../utils';
 
 const Discount = () => {
-  const { basket } = useContext(BasketContext);
+  const { uniqueBasket, count } = useContext(BasketContext);
+  console.log('count ==> ', count);
+  console.log('uniqueBasket ==> ', uniqueBasket);
+  // console.log(
+  //   'pricingRules ==> ',
+  //   pricingRules[0].productCode,
+  //   pricingRules[0].buyXgetYFree.MinNumOfItemsNeeded
+  // );
+  console.log(
+    'pricingRules ==> ',
+    pricingRules[1].productCode,
+    pricingRules[1].discount.percentage,
+    pricingRules[1].discount.MinNumOfItemsNeeded
+  );
 
-  // get pricing rule provided productCode
-  const getPricingRulesForProductCode = productCode => {
-    const rule = pricingRules.filter(rule => rule.productCode === productCode);
-    const ruleKeys = rule.map(r => Object.keys(r));
-    if (ruleKeys.includes('buyXgetYFree')) {
-      return rule.map(r => r.buyXgetYFree.MinNumOfItemsNeeded);
-    }
-  };
+  // Buy1Get1Free discount rules for FR1
+  const ruleA = pricingRules[0].buyXgetYFree.MinNumOfItemsNeeded;
+  const itemA = count['FR1'];
+  //const productCodeA = pricingRules[0].productCode;
 
-  // return mapped basket with no of items per productCode
-  const mappedBasket = getMapOfBasketItems(basket);
+  const discountA =
+    itemA % ruleA === 0
+      ? Math.abs((itemA / ruleA) * 3.11)
+      : Math.abs(((itemA - 1) / ruleA) * 3.11);
 
-  return basket.map((item, idx) => {
-    return (
-      <div key={idx}>
-        {/* {item} */}
-        {/* <pre>{JSON.stringify(getPricingRulesForProductCode(item))}</pre>
-        <pre>{JSON.stringify(mappedBasket)}</pre> */}
-      </div>
-    );
-  });
+  // Discount rules for SR1
+  const ruleB = pricingRules[1].discount.MinNumOfItemsNeeded;
+  const percentage = pricingRules[1].discount.percentage;
+  const itemB = count['SR1'];
+  //const productCodeB = pricingRules[1].productCode;
 
-  // pricing rule to be passed to disdount setting function
-  const pricingRule = getPricingRulesForProductCode('FR1');
+  const discountB =
+    itemB % ruleB === 0
+      ? itemB * (percentage / 100) * 5.0
+      : itemB % ruleB !== 0
+      ? (itemB - (itemB % ruleB)) * (percentage / 100) * 5.0
+      : 0;
 
-  // // return mapped basket with no of items per productCode
-  // const mappedBasket = getMapOfBasketItems(basket);
-
-  // discount based on pricing rule and looping over mappedBasket
-  const discount = getDiscountData(mappedBasket, pricingRule);
+  return (
+    <div>
+      <div>FR1 -£{discountA.toFixed(2)}</div>
+      <div>SR1 -£{discountB.toFixed(2)}</div>
+    </div>
+  );
 };
 
 export default Discount;

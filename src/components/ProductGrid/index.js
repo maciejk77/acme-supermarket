@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { products } from '../../data/productData.json';
 import { BasketContext } from '../BasketContext/index.js';
+import { products } from '../../data/productData.json';
 import { completeProductInfo } from '../../utils';
 
 const ProductGrid = () => {
