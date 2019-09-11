@@ -1,15 +1,30 @@
 import React, { useContext } from 'react';
 import { BasketContext } from '../BasketContext';
+import { getMapOfBasketItems } from '../../utils';
 
 const ShoppingList = () => {
   const { basket } = useContext(BasketContext);
 
-  return basket.map((item, idx) => {
+  // map of each productCode count
+  const count = getMapOfBasketItems(basket.map(el => el.productCode));
+  // unique productCodes
+  const uniqueKeys = Object.keys(count);
+  // uniqueBasket, only one object per productCode
+  const uniqueBasket = uniqueKeys.reduce(
+    (uniqueBasket, item) =>
+      uniqueBasket.concat(basket.find(el => el.productCode === item)),
+    []
+  );
+
+  return uniqueBasket.map((item, idx) => {
+    const countForItem = count[item.productCode];
     return (
       <div style={styles.shoppingListStyle} key={idx}>
-        <div>1x ({item.productCode})</div>
+        <div>
+          {countForItem}x ({item.productCode})
+        </div>
         <div>{item.description}</div>
-        <div>{`£${(item.price / 100).toFixed(2)}`}</div>
+        <div>{`£${(countForItem * (item.price / 100)).toFixed(2)}`}</div>
       </div>
     );
   });
