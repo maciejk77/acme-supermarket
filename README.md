@@ -48,7 +48,7 @@ Test Data:
 ## Technology and tasks completed
 
 - setting generic UI, components based
-- used hooks e.g. useState, useContext
+- used hooks e.g. useState, useContext, useReducer
 - Parcel bundling
 
 ## To be done
@@ -63,4 +63,4 @@ Test Data:
 
 ## Screenshot
 
-![Screenshot](src/assets/screenshot1.png)
+![Screenshot](src/assets/screenshot2.png)
