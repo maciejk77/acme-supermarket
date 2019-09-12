@@ -3,14 +3,14 @@
     {
       "productCode": "FR1",
       "buyXgetYFree": {
-        "MinNumOfItemsNeeded": "2"
+        "itemsNeeded": "2"
       }
     },
     {
       "productCode": "SR1",
       "discount": {
         "percentage": "10",
-        "MinNumOfItemsNeeded": "3"
+        "itemsNeeded": "3"
       }
     }
   ]

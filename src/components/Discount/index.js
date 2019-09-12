@@ -4,49 +4,64 @@ import { pricingRules } from '../../data/pricingRules.json';
 
 const Discount = () => {
   const { uniqueBasket, count } = useContext(BasketContext);
-  console.log('count ==> ', count);
-  console.log('uniqueBasket ==> ', uniqueBasket);
-  // console.log(
-  //   'pricingRules ==> ',
-  //   pricingRules[0].productCode,
-  //   pricingRules[0].buyXgetYFree.MinNumOfItemsNeeded
-  // );
-  console.log(
-    'pricingRules ==> ',
-    pricingRules[1].productCode,
-    pricingRules[1].discount.percentage,
-    pricingRules[1].discount.MinNumOfItemsNeeded
-  );
 
-  // Buy1Get1Free discount rules for FR1
-  const ruleA = pricingRules[0].buyXgetYFree.MinNumOfItemsNeeded;
-  const itemA = count['FR1'];
-  //const productCodeA = pricingRules[0].productCode;
+  // helper functions
+  const getPrice = (basket, prodCode) =>
+    basket.filter(el => el.productCode === prodCode).map(el => el.price) / 100;
+  const getCount = productCode => count[productCode];
+  const hasNoRemainder = (item, rule) => item % rule === 0;
 
-  const discountA =
-    itemA % ruleA === 0
-      ? Math.abs((itemA / ruleA) * 3.11)
-      : Math.abs(((itemA - 1) / ruleA) * 3.11);
+  // === BUY X GET Y FREE LOGIC ===========================
+  const discountBuyXGetYFree = (pricingRule, productCode) => {
+    const rule = pricingRule.buyXgetYFree.itemsNeeded;
+    const itemsNum = count[productCode];
 
-  // Discount rules for SR1
-  const ruleB = pricingRules[1].discount.MinNumOfItemsNeeded;
-  const percentage = pricingRules[1].discount.percentage;
-  const itemB = count['SR1'];
-  //const productCodeB = pricingRules[1].productCode;
+    const price = getPrice(uniqueBasket, productCode);
+    const itemRuleModulus = hasNoRemainder(itemsNum, rule);
 
-  const discountB =
-    itemB % ruleB === 0
-      ? itemB * (percentage / 100) * 5.0
-      : itemB % ruleB !== 0
-      ? (itemB - (itemB % ruleB)) * (percentage / 100) * 5.0
-      : 0;
+    const discount = itemRuleModulus
+      ? (itemsNum / rule) * price
+      : ((itemsNum - 1) / rule) * price;
+    return discount.toFixed(2);
+  };
+
+  // === DISCOUNT PERCENTAGE LOGIC ===========================
+  const discountPercentage = (pricingRule, productCode) => {
+    const rule = pricingRule.discount.itemsNeeded;
+    const percentage = pricingRule.discount.percentage;
+
+    const itemsNum = getCount(productCode);
+    const price = getPrice(uniqueBasket, productCode);
+    const itemRuleModulus = hasNoRemainder(itemsNum, rule);
+
+    const discount = itemRuleModulus
+      ? itemsNum * (percentage / 100) * price
+      : !itemRuleModulus
+      ? (itemsNum - (itemsNum % rule)) * (percentage / 100) * price
+      : '';
+    return discount.toFixed(2);
+  };
 
   return (
     <div>
-      <div>FR1 -£{discountA.toFixed(2)}</div>
-      <div>SR1 -£{discountB.toFixed(2)}</div>
+      <div>FR1 -£{discountBuyXGetYFree(pricingRules[0], 'FR1')}</div>
+      <div>SR1 -£{discountPercentage(pricingRules[1], 'SR1')}</div>
     </div>
   );
 };
 
 export default Discount;
+
+// console.log('count ==> ', count);
+// console.log('uniqueBasket ==> ', uniqueBasket);
+// // console.log(
+// //   'pricingRules ==> ',
+// //   pricingRules[0].productCode,
+// //   pricingRules[0].buyXgetYFree.MinNumOfItemsNeeded
+// // );
+// console.log(
+//   'pricingRules ==> ',
+//   pricingRules[1].productCode,
+//   pricingRules[1].discount.percentage,
+//   pricingRules[1].discount.minNumOfItemsNeeded
+// );
