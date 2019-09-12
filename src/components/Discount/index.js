@@ -40,25 +40,44 @@ const Discount = () => {
     return (price * discount).toFixed(2);
   };
 
-  // display below is controlled by logic
+  // display below is controlled by logic...
   // if discount type exists && if at least one item of given type was already selected
 
   return pricingRules.map(pricingRule => {
     return (
-      <Fragment key={pricingRule.productCode}>
-        <div>
-          {pricingRule.buyXgetYFree && count[pricingRule.productCode]
-            ? `-£${discountBuyXGetYFree(pricingRule, pricingRule.productCode)}`
-            : ''}
+      <div key={pricingRule.productCode} style={styles.discount}>
+        <div style={styles.discountItem}>
+          {pricingRule.buyXgetYFree &&
+            count[pricingRule.productCode] &&
+            `discount (${pricingRule.productCode}) -£${discountBuyXGetYFree(
+              pricingRule,
+              pricingRule.productCode
+            )}`}
         </div>
-        <div>
-          {pricingRule.discount && count[pricingRule.productCode]
-            ? `-£${discountPercentage(pricingRule, pricingRule.productCode)}`
-            : ''}
+        <div style={styles.discountItem}>
+          {pricingRule.discount &&
+            count[pricingRule.productCode] &&
+            `discount (${pricingRule.productCode}) -£${discountPercentage(
+              pricingRule,
+              pricingRule.productCode
+            )}`}
         </div>
-      </Fragment>
+      </div>
     );
   });
+};
+
+// quick fix, temp styles to be replaced with Sass or styled components
+const styles = {
+  discount: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    paddingRight: '1rem',
+    lineHeight: '1.75rem'
+  },
+  discountItem: {
+    color: 'blue'
+  }
 };
 
 export default Discount;
