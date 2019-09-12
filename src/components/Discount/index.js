@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { BasketContext } from '../BasketContext';
 import { pricingRules } from '../../data/pricingRules.json';
 
@@ -19,49 +19,46 @@ const Discount = () => {
     const price = getPrice(uniqueBasket, productCode);
     const itemRuleModulus = hasNoRemainder(itemsNum, rule);
 
-    const discount = itemRuleModulus
-      ? (itemsNum / rule) * price
-      : ((itemsNum - 1) / rule) * price;
-    return discount.toFixed(2);
+    const discount = itemRuleModulus ? itemsNum / rule : (itemsNum - 1) / rule;
+    return (price * discount).toFixed(2);
   };
 
   // === DISCOUNT PERCENTAGE LOGIC ===========================
   const discountPercentage = (pricingRule, productCode) => {
     const rule = pricingRule.discount.itemsNeeded;
+    const itemsNum = getCount(productCode);
     const percentage = pricingRule.discount.percentage;
 
-    const itemsNum = getCount(productCode);
     const price = getPrice(uniqueBasket, productCode);
     const itemRuleModulus = hasNoRemainder(itemsNum, rule);
 
     const discount = itemRuleModulus
-      ? itemsNum * (percentage / 100) * price
+      ? itemsNum * (percentage / 100)
       : !itemRuleModulus
-      ? (itemsNum - (itemsNum % rule)) * (percentage / 100) * price
+      ? (itemsNum - (itemsNum % rule)) * (percentage / 100)
       : '';
-    return discount.toFixed(2);
+    return (price * discount).toFixed(2);
   };
 
-  return (
-    <div>
-      <div>FR1 -£{discountBuyXGetYFree(pricingRules[0], 'FR1')}</div>
-      <div>SR1 -£{discountPercentage(pricingRules[1], 'SR1')}</div>
-    </div>
-  );
+  // display below is controlled by logic
+  // if discount type exists && if at least one item of given type was already selected
+
+  return pricingRules.map(pricingRule => {
+    return (
+      <Fragment key={pricingRule.productCode}>
+        <div>
+          {pricingRule.buyXgetYFree && count[pricingRule.productCode]
+            ? `-£${discountBuyXGetYFree(pricingRule, pricingRule.productCode)}`
+            : ''}
+        </div>
+        <div>
+          {pricingRule.discount && count[pricingRule.productCode]
+            ? `-£${discountPercentage(pricingRule, pricingRule.productCode)}`
+            : ''}
+        </div>
+      </Fragment>
+    );
+  });
 };
 
 export default Discount;
-
-// console.log('count ==> ', count);
-// console.log('uniqueBasket ==> ', uniqueBasket);
-// // console.log(
-// //   'pricingRules ==> ',
-// //   pricingRules[0].productCode,
-// //   pricingRules[0].buyXgetYFree.MinNumOfItemsNeeded
-// // );
-// console.log(
-//   'pricingRules ==> ',
-//   pricingRules[1].productCode,
-//   pricingRules[1].discount.percentage,
-//   pricingRules[1].discount.minNumOfItemsNeeded
-// );
