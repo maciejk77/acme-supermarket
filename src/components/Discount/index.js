@@ -8,35 +8,35 @@ const Discount = () => {
   // helper functions
   const getPrice = (basket, prodCode) =>
     basket.filter(el => el.productCode === prodCode).map(el => el.price) / 100;
-  const getCount = productCode => count[productCode];
   const hasNoRemainder = (item, rule) => item % rule === 0;
 
   // === BUY X GET Y FREE LOGIC ===========================
   const discountBuyXGetYFree = (pricingRule, productCode) => {
-    const rule = pricingRule.buyXgetYFree.itemsNeeded;
-    const itemsNum = count[productCode];
+    const { itemsNeeded } = pricingRule.buyXgetYFree;
+    const itemsCount = count[productCode];
 
     const price = getPrice(uniqueBasket, productCode);
-    const itemRuleModulus = hasNoRemainder(itemsNum, rule);
+    const itemRuleModulus = hasNoRemainder(itemsCount, itemsNeeded);
 
-    const discount = itemRuleModulus ? itemsNum / rule : (itemsNum - 1) / rule;
+    const discount = itemRuleModulus
+      ? itemsCount / itemsNeeded
+      : (itemsCount - 1) / itemsNeeded;
     return (price * discount).toFixed(2);
   };
 
   // === DISCOUNT PERCENTAGE LOGIC ===========================
   const discountPercentage = (pricingRule, productCode) => {
-    const rule = pricingRule.discount.itemsNeeded;
-    const itemsNum = getCount(productCode);
-    const percentage = pricingRule.discount.percentage;
+    const { itemsNeeded, percentage } = pricingRule.discount;
+    const itemsCount = count[productCode];
 
     const price = getPrice(uniqueBasket, productCode);
-    const itemRuleModulus = hasNoRemainder(itemsNum, rule);
+    const itemRuleModulus = hasNoRemainder(itemsCount, itemsNeeded);
 
     const discount = itemRuleModulus
-      ? itemsNum * (percentage / 100)
+      ? itemsCount * (percentage / 100)
       : !itemRuleModulus
-      ? (itemsNum - (itemsNum % rule)) * (percentage / 100)
-      : '';
+      ? (itemsCount - (itemsCount % itemsNeeded)) * (percentage / 100)
+      : null;
     return (price * discount).toFixed(2);
   };
 
@@ -44,40 +44,28 @@ const Discount = () => {
   // if discount type exists && if at least one item of given type was already selected
 
   return pricingRules.map(pricingRule => {
+    const { productCode, buyXgetYFree, discount } = pricingRule;
     return (
-      <div key={pricingRule.productCode} style={styles.discount}>
-        <div style={styles.discountItem}>
-          {pricingRule.buyXgetYFree &&
-            count[pricingRule.productCode] &&
-            `discount (${pricingRule.productCode}) -£${discountBuyXGetYFree(
+      <div key={productCode}>
+        <div>
+          {buyXgetYFree &&
+            count[productCode] > buyXgetYFree.itemsNeeded - 1 &&
+            `discount (${productCode}) -£${discountBuyXGetYFree(
               pricingRule,
-              pricingRule.productCode
+              productCode
             )}`}
         </div>
-        <div style={styles.discountItem}>
-          {pricingRule.discount &&
-            count[pricingRule.productCode] &&
-            `discount (${pricingRule.productCode}) -£${discountPercentage(
+        <div>
+          {discount &&
+            count[productCode] > discount.itemsNeeded - 1 &&
+            `discount (${productCode}) -£${discountPercentage(
               pricingRule,
-              pricingRule.productCode
+              productCode
             )}`}
         </div>
       </div>
     );
   });
-};
-
-// quick fix, temp styles to be replaced with Sass or styled components
-const styles = {
-  discount: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    paddingRight: '1rem',
-    lineHeight: '1.75rem'
-  },
-  discountItem: {
-    color: 'blue'
-  }
 };
 
 export default Discount;
