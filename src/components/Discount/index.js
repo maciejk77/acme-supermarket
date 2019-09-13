@@ -18,7 +18,7 @@ const Discount = () => {
     const price = getPrice(uniqueBasket, productCode);
     const itemRuleModulus = hasNoRemainder(itemsCount, itemsNeeded);
 
-    const dqiscount = itemRuleModulus
+    const discount = itemRuleModulus
       ? itemsCount / itemsNeeded
       : (itemsCount - 1) / itemsNeeded;
     return (price * discount).toFixed(2);
@@ -44,7 +44,6 @@ const Discount = () => {
   // if discount type exists && if at least one item of given type was already selected
 
   return pricingRules.map(rule => {
-    console.log(Object.keys(count));
     const { productCode, buyXgetYFree, discountPercentage } = rule;
 
     return (
