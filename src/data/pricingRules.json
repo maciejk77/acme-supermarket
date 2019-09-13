@@ -8,7 +8,7 @@
     },
     {
       "productCode": "SR1",
-      "discount": {
+      "discountPercentage": {
         "percentage": "10",
         "itemsNeeded": "3"
       }
