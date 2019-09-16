@@ -1,3 +1,5 @@
+import { pricingRules } from '../src/data/pricingRules.json';
+
 // === mapping a basket, how many items of given productCode are in the basket ===
 export const getMapOfBasketItems = basket => {
   const basketItemsMap = {};
@@ -23,3 +25,15 @@ export const completeProductInfo = (products, itemCode) => {
 // === getting number(s) formatted to decimal, and set number of places ===
 export const formatToDecimal = (number, places) =>
   (number / 100).toFixed(places);
+
+// === get price for a given productCode from basket object given
+export const getPrice = (basket, prodCode) =>
+  basket.filter(el => el.productCode === prodCode).map(el => el.price) / 100;
+
+// == returns boolean to clean up code, has or has not have a reminder after division
+export const hasNoRemainder = (item, rule) => item % rule === 0;
+
+// === returns a pricing rule for productCode provided
+export const getPricingRule = prodCode => {
+  return pricingRules.filter(rule => rule.productCode === prodCode);
+};
