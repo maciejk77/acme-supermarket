@@ -43,18 +43,16 @@ const Discount = () => {
   return pricingRules.map(rule => {
     const { productCode, buyXgetYFree, discountPercentage } = rule;
     const typeOfDiscount = buyXgetYFree ? buyXgetYFree : discountPercentage;
-    const applyDiscount = buyXgetYFree ? true : false;
+    const applyDiscount = buyXgetYFree
+      ? applyBuyXGetYFree(rule, productCode)
+      : applyDiscountPercentage(rule, productCode);
 
     return (
       <div key={productCode}>
         <div>
           {typeOfDiscount &&
             count[productCode] > typeOfDiscount.itemsNeeded - 1 &&
-            `discount (${productCode}) -£${
-              applyDiscount
-                ? applyBuyXGetYFree(rule, productCode)
-                : applyDiscountPercentage(rule, productCode)
-            }`}
+            `discount (${productCode}) -£${applyDiscount}`}
         </div>
       </div>
     );
