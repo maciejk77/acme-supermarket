@@ -60,4 +60,4 @@ Test Data:
 
 ## Screenshot
 
-![Screenshot](src/assets/screenshot2.png)
+![Screenshot](src/assets/screenshot4.png)
