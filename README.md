@@ -53,12 +53,9 @@ Test Data:
 
 ## To be done
 
-- refactor and split to atomic design
-- general refactor, some repetition with utils
+- sum of discounts available in Discount component, logic there already
 - add removal button to ShoppingList (to remove items if needed)
 - apply proper styling Sass or styled components, remove inline
-- write Jest test
-- write Cypress tests
 - build Node/Express endpoint and PricingPanel
 
 ## Screenshot
